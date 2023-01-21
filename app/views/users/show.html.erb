@@ -1,1 +1,23 @@
-<%= render 'user_info', users: @users %>
+<%= flash[:notice] %>
+
+<h2>User info</h2>
+<p><%= image_tag @user.get_profile_image, size:"100x100" %></p>
+<table class = "table">
+  <tbody>
+    <tr>
+      <th>name</th>
+      <th><%= @user.name %></th>
+    </tr>
+    <tr>
+      <th>introduction</th>
+      <th><%= @user.introduction %></th>
+    </tr>
+  </tbody>
+</table>
+<btn class = "update_btn">
+  <%= link_to "user update", edit_user_path(@user) %>
+</btn>
+
+<%= render 'books/new_book', book: @book %>
+
+
