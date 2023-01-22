@@ -11,11 +11,12 @@ class UsersController < ApplicationController
   def show
     @book = Book.new
     @user = User.find(params[:id])
+    @books = @user.books.order('updated_at DESC')
   end
 
   def edit
     @user = User.find(params[:id])
-    @user == current_user
+    # @user == current_user
   end
   
   def update

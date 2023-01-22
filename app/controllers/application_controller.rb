@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   
   def after_sign_in_path_for(resource)
     user_path(current_user)
-    flash[:notice] = "Welcome! You have successfully signed in!"
   end
   
   def after_sign_out_path_for(resource)

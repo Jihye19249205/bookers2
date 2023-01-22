@@ -12,10 +12,6 @@
     </tr>
   </tbody>
 </table>
-<div class = "row">
-  <btn class = "user_update_btn">
-  <%= link_to edit_user_path(current_user) do %>
-    <i class="fa-solid fa-user-gear"></i>
-  <% end %>
-  </btn>
-</div>
+<button class>
+  <%= link_to "Update", edit_user_path(user.id) %>
+</button>
