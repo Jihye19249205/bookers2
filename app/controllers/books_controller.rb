@@ -1,46 +1,63 @@
 class BooksController < ApplicationController
+before_action :authenticate_user!, only: [:new, :edit, :destroy, :update]
 
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
     if @book.save
-      flash[:notice] = "Your book has been successfully created!"
-      redirect_to book_path
+      redirect_to book_path(@book)
     else
+      @books = Book.all
       render :index
     end
   end
 
   def index
-    @book = Book.new
     @books = Book.all
+    @book = Book.new
+
   end
 
   def show
-    @book = Book.new(book_params)
+    @books = Book.new
     @book = Book.find(params[:id])
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def edit
     @book = Book.find(params[:id])
+    unless @book.user == current_user
+      redirect_to book_path(@book.id)
+    end
   end
 
   def update
     @book = Book.find(params[:id])
+    if @book.update
+      flash[:notice] = "Your book has been successfully updated!"
+      redirect_to book_path(@book)
+    else
+      render :edit
+    end
   end
 
   def destroy
     @book = Book.find(params[:id])
-    @book.destroy
-    flash[:notice] = "The book has been successfully deleted."
-    redirect_to books_path
+    if @book.user == current_user
+      @book.destroy
+      flash[:notice] = "The book has been successfully deleted."
+      redirect_to books_path
+    else
+      nil
+    end
   end
 
   private
 
   def book_params
-    params.permit(:title, :body, :user_id)
+    params.require(:book).permit(:title, :body)
   end
-
+  
+  
+  
 end
