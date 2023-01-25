@@ -20,7 +20,7 @@ before_action :is_matching_login_user, only: [:edit, :update]
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = "Your user info has been successfully updated."
-      # redirect_to user_path(@user.id)
+      redirect_to user_path(@user.id)
     else
       render :edit
     end
@@ -35,7 +35,7 @@ before_action :is_matching_login_user, only: [:edit, :update]
   def is_matching_login_user
     user_id = params[:id].to_i
     unless user_id == current_user.id
-      redirect_to books_path
+      redirect_to user_path(current_user)
     end
   end
 
